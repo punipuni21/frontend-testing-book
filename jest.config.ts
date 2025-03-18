@@ -6,6 +6,7 @@ export default {
   testEnvironment: "jest-environment-jsdom",
   transform: { "^.+\\.(ts?|tsx?)$": "ts-jest" },
   setupFilesAfterEnv: ["./jest.setup.ts"],
+  roots: ["<rootDir>/src"],
   reporters: [
     "default",
     [
