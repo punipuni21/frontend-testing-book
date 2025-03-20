@@ -31,3 +31,56 @@ describe("value verification", () => {
     expect(value).toBeLessThanOrEqual(4);
   });
 });
+
+test("floating point number is not accurate", () => {
+  const value = 0.1 + 0.2;
+  expect(value).not.toBe(0.3);
+});
+
+test("compare floating point numbers with a certain precision", () => {
+  const value = 0.1 + 0.2;
+  expect(value).toBeCloseTo(0.3); // dfault precision is 2
+  expect(value).toBeCloseTo(0.3, 15);
+  expect(value).not.toBeCloseTo(0.3, 16);
+});
+
+describe("string verification", () => {
+  const str = "こんにちは世界";
+  const obj = { status: 200, message: str };
+
+  test("equality verification", () => {
+    expect(str).toBe("こんにちは世界");
+    expect(str).toEqual("こんにちは世界");
+  });
+
+  test("toContain verification", () => {
+    expect(str).toContain("世界");
+    expect(str).not.toContain("こんばんは");
+  });
+
+  test("toMatch verification", () => {
+    expect(str).toMatch(/世界/);
+    expect(str).not.toMatch(/こんばんは/);
+  });
+
+  test("toHaveLength", () => {
+    expect(str).toHaveLength(7);
+    expect(str).not.toHaveLength(8);
+  });
+
+  test("stringContaining verification", () => {
+    expect(obj).toEqual(
+      expect.objectContaining({
+        message: expect.stringContaining("世界"),
+      })
+    );
+  });
+
+  test("stringMatching verification", () => {
+    expect(obj).toEqual(
+      expect.objectContaining({
+        message: expect.stringMatching(/世界/),
+      })
+    );
+  });
+});
