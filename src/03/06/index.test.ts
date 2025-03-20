@@ -111,3 +111,42 @@ describe("array verification", () => {
     expect(articles).not.toEqual(expect.arrayContaining([article4]));
   });
 });
+
+describe("object verification", () => {
+  const author = { name: "yamada", age: 28 };
+  test("toMatchObject verification", () => {
+    expect(author).toMatchObject({ name: "yamada" });
+    expect(author).toMatchObject({ name: "yamada", age: 28 });
+    expect(author).not.toMatchObject({ name: "yamada", age: 29 });
+  });
+
+  test("toHaveProperty verification", () => {
+    expect(author).toHaveProperty("name");
+    expect(author).toHaveProperty("age");
+    expect(author).not.toHaveProperty("address");
+  });
+
+  const article = {
+    title: "Testing React",
+    author: { name: "yamada", age: 28 },
+  };
+
+  test("objectContaining verification", () => {
+    expect(article).toEqual({
+      title: "Testing React",
+      author: expect.objectContaining({ name: "yamada" }),
+    });
+    expect(article).toEqual({
+      title: "Testing React",
+      author: expect.objectContaining({ name: "yamada", age: 28 }),
+    });
+    expect(article).toEqual({
+      title: "Testing React",
+      author: expect.not.objectContaining({ name: "yamada", age: 29 }),
+    });
+    expect(article).not.toEqual({
+      title: "Testing React",
+      author: expect.objectContaining({ name: "yamada", age: 29 }),
+    });
+  });
+});
