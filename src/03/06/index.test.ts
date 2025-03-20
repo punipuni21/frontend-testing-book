@@ -84,3 +84,30 @@ describe("string verification", () => {
     );
   });
 });
+
+describe("array verification", () => {
+  const tags = ["Jest", "Storybook", "Playwright", "React", "Next.js"];
+  test("toContain", () => {
+    expect(tags).toContain("Jest");
+    expect(tags).toHaveLength(5);
+  });
+
+  const article1 = { author: "taro", title: "Testing Next.js" };
+  const article2 = { author: "jiro", title: "Testing React" };
+  const article3 = { author: "hanako", title: "Testing Jest" };
+  const article4 = { author: "saburo", title: "Testing Playwright" };
+  const articles = [article1, article2, article3];
+  test("toContainEqual", () => {
+    expect(articles).toContainEqual(article1);
+    expect(articles).toHaveLength(3);
+  });
+
+  test("arrayContaining verification", () => {
+    expect(articles).toEqual(expect.arrayContaining([article1]));
+    expect(articles).toEqual(expect.arrayContaining([article1, article2]));
+    expect(articles).toEqual(
+      expect.arrayContaining([article1, article2, article3])
+    );
+    expect(articles).not.toEqual(expect.arrayContaining([article4]));
+  });
+});
