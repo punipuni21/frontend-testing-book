@@ -1,4 +1,8 @@
-import { Articles } from "./type";
+import { Articles, HttpError } from "./type";
+
+export const httpError: HttpError = {
+  err: { message: "Internal Server Error" },
+};
 
 export const getMyArticlesData: Articles = {
   articles: [

@@ -1,5 +1,6 @@
 import { getGreet } from ".";
 import * as Fetchers from "../fetchers";
+import { httpError } from "../fetchers/fixtures";
 
 jest.mock("../fetchers");
 
@@ -24,9 +25,7 @@ describe("getGreet", () => {
   });
 
   test("when fetching data fails", async () => {
-    jest
-      .spyOn(Fetchers, "getMyProfile")
-      .mockRejectedValueOnce(Fetchers.httpError);
+    jest.spyOn(Fetchers, "getMyProfile").mockRejectedValueOnce(httpError);
     await expect(getGreet()).rejects.toMatchObject({
       err: { message: "Internal Server Error" },
     });
@@ -34,13 +33,11 @@ describe("getGreet", () => {
 
   test("when fetching data fails with unexpected error, error data is thrown", async () => {
     expect.assertions(1);
-    jest
-      .spyOn(Fetchers, "getMyProfile")
-      .mockRejectedValueOnce(Fetchers.httpError);
+    jest.spyOn(Fetchers, "getMyProfile").mockRejectedValueOnce(httpError);
     try {
       await getGreet();
     } catch (err) {
-      expect(err).toMatchObject(Fetchers.httpError);
+      expect(err).toMatchObject(httpError);
     }
   });
 });

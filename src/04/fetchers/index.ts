@@ -1,8 +1,4 @@
-import { Profile, HttpError, Articles } from "./type";
-
-export const httpError: HttpError = {
-  err: { message: "Internal Server Error" },
-};
+import { Profile, Articles } from "./type";
 
 export function getMyProfile(): Promise<Profile> {
   return fetch("https://myapi.testing.com/my/profile").then(async (res) => {

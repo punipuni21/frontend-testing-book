@@ -1,6 +1,6 @@
 import { getMyArticleLinksByCategory } from ".";
 import * as Fetchers from "../fetchers";
-import { getMyArticlesData } from "../fetchers/fixtures";
+import { getMyArticlesData, httpError } from "../fetchers/fixtures";
 
 jest.mock("../fetchers");
 
@@ -8,7 +8,7 @@ function mockGetMyArticles(status = 200) {
   if (status > 299) {
     return jest
       .spyOn(Fetchers, "getMyArticles")
-      .mockRejectedValueOnce(Fetchers.httpError);
+      .mockRejectedValueOnce(httpError);
   }
   return jest
     .spyOn(Fetchers, "getMyArticles")
