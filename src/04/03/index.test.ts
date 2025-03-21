@@ -22,4 +22,25 @@ describe("getGreet", () => {
 
     await expect(getGreet()).resolves.toBe("Hello, taroyamada!");
   });
+
+  test("when fetching data fails", async () => {
+    jest
+      .spyOn(Fetchers, "getMyProfile")
+      .mockRejectedValueOnce(Fetchers.httpError);
+    await expect(getGreet()).rejects.toMatchObject({
+      err: { message: "Internal Server Error" },
+    });
+  });
+
+  test("when fetching data fails with unexpected error, error data is thrown", async () => {
+    expect.assertions(1);
+    jest
+      .spyOn(Fetchers, "getMyProfile")
+      .mockRejectedValueOnce(Fetchers.httpError);
+    try {
+      await getGreet();
+    } catch (err) {
+      expect(err).toMatchObject(Fetchers.httpError);
+    }
+  });
 });
