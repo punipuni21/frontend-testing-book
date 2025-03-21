@@ -10,7 +10,7 @@ export async function getMyArticleLinksByCategory(category: string) {
     return null;
   }
   return articles.map((article) => ({
-    titie: article.title,
+    title: article.title,
     link: `/articles/${article.id}`,
   }));
 }
