@@ -1,3 +1,5 @@
+import { greet } from "./greet";
+
 test("mock func was called", () => {
   const mockFn = jest.fn();
   mockFn();
@@ -33,4 +35,10 @@ test("mock func can watch the arguments", () => {
   }
   greet("John");
   expect(mockFn).toHaveBeenCalledWith("John");
+});
+
+test("mock func can be used as a argment of callback", () => {
+  const mockFn = jest.fn();
+  greet("John", mockFn);
+  expect(mockFn).toHaveBeenCalledWith("Hello! John");
 });
