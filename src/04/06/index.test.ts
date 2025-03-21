@@ -1,6 +1,7 @@
 import { httpError, postMyArticleData } from "../fetchers/fixtures";
 import { ArticleInput } from "../fetchers/type";
 import * as Fetchers from "../fetchers";
+import { postMyArticle } from "../fetchers";
 import { checkLength } from ".";
 
 function mockPostArticle(input: ArticleInput, status = 200) {
@@ -28,3 +29,32 @@ function inputFactory(input?: Partial<ArticleInput>): ArticleInput {
     ...input,
   };
 }
+
+test("when pass validations, return success", async () => {
+  const input = inputFactory();
+  const mock = mockPostArticle(input);
+
+  const result = await postMyArticle(input);
+  expect(result).toMatchObject(expect.objectContaining(input));
+  expect(mock).toHaveBeenCalled();
+});
+
+test("when violate validations, return error", async () => {
+  expect.assertions(2);
+  const input = inputFactory({ title: "", body: "" });
+  const mock = mockPostArticle(input);
+  await postMyArticle(input).catch((err) => {
+    expect(err).toMatchObject({ err: { message: "Internal Server Error" } });
+    expect(mock).toHaveBeenCalled();
+  });
+});
+
+test("when fetching data failed, reject with error", async () => {
+  expect.assertions(2);
+  const input = inputFactory();
+  const mock = mockPostArticle(input, 500);
+  await postMyArticle(input).catch((err) => {
+    expect(err).toMatchObject({ err: { message: "Internal Server Error" } });
+    expect(mock).toHaveBeenCalled();
+  });
+});
