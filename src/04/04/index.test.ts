@@ -35,3 +35,12 @@ test("when at leaat one article found, return article links", async () => {
     },
   ]);
 });
+
+test("when fetching data fails, reject with error", async () => {
+  mockGetMyArticles(500);
+  await getMyArticleLinksByCategory("testing").catch((err) => {
+    expect(err).toMatchObject({
+      err: { message: "Internal Server Error" },
+    });
+  });
+});
