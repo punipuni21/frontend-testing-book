@@ -1,13 +1,4 @@
-export type Profile = {
-  id: string;
-  name?: string;
-  age?: number;
-  email: string;
-};
-
-export type HttpError = {
-  err: { message: string };
-};
+import { Profile, HttpError } from "./type";
 
 export const httpError: HttpError = {
   err: { message: "Internal Server Error" },
