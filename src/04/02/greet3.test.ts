@@ -1,11 +1,12 @@
 import { greet, sayGoodBye } from "./greet";
 
 jest.mock("./greet", () => ({
-  sayGoodBye: (name: string) => `Goodbye, ${name}.`,
+  ...jest.requireActual("./greet"), // import all from greet.ts
+  sayGoodBye: (name: string) => `Goodbye, ${name}.`, // we can only mock sayGoodBye
 }));
 
 test("return greeting message(mock)", () => {
-  expect(greet).toBeUndefined();
+  expect(greet("Taro")).toBe("Hello, Taro");
 });
 
 test("return goodbye message(mock)", () => {
