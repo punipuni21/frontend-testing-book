@@ -16,3 +16,21 @@ test("verify the number of calls", () => {
   mockFn();
   expect(mockFn).toHaveBeenCalledTimes(2);
 });
+
+test("mock fun can be called in a function", () => {
+  const mockFn = jest.fn();
+  function greet() {
+    mockFn();
+  }
+  greet();
+  expect(mockFn).toHaveBeenCalledTimes(1);
+});
+
+test("mock func can watch the arguments", () => {
+  const mockFn = jest.fn();
+  function greet(name: string) {
+    mockFn(name);
+  }
+  greet("John");
+  expect(mockFn).toHaveBeenCalledWith("John");
+});
