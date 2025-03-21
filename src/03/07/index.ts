@@ -3,3 +3,9 @@ export function wait(duration: number): Promise<number> {
     setTimeout(() => resolve(duration), duration);
   });
 }
+
+export function timeout(duration: number): Promise<number> {
+  return new Promise((_, reject) => {
+    setTimeout(() => reject(duration), duration);
+  });
+}
