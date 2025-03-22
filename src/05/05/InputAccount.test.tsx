@@ -11,3 +11,19 @@ test("mail address", async () => {
   await user.type(textbox, value);
   expect(screen.getByDisplayValue(value)).toBeInTheDocument();
 });
+
+test("password input area", async () => {
+  render(<InputAccount />);
+  expect(() => screen.getByRole("textbox", { name: "password" })).toThrow(); // <input type="password"> does not have a role attribute
+  expect(() =>
+    screen.getByPlaceholderText("input more than 8 characters")
+  ).not.toThrow();
+});
+
+test("password input area", async () => {
+  render(<InputAccount />);
+  const password = screen.getByPlaceholderText("input more than 8 characters"); // <input type="password"> does not have a role attribute
+  const value = "abcdefghi";
+  await user.type(password, value);
+  expect(screen.getByDisplayValue(value)).toBeInTheDocument();
+});
