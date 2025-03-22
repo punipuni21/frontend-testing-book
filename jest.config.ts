@@ -4,7 +4,7 @@ export default {
   coverageDirectory: "coverage",
   moduleFileExtensions: ["js", "jsx", "ts", "tsx"],
   testEnvironment: "jest-environment-jsdom",
-  transform: { "^.+\\.(ts?|tsx?)$": "ts-jest" },
+  transform: { "^.+\\.(ts?|tsx?)$": "babel-jest" },
   setupFilesAfterEnv: ["./jest.setup.ts"],
   roots: ["<rootDir>/src"],
   reporters: [
