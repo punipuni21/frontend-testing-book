@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { Form } from "./Form";
 
 // @babel/preset-typescript: TypeScriptからJavaScriptへ変換
@@ -18,4 +18,11 @@ test("display button", () => {
 test("display heading", () => {
   render(<Form name="taro" />);
   expect(screen.getByRole("heading")).toHaveTextContent("account info");
+});
+
+test("when push button, then event handler is called", () => {
+  const mockFn = jest.fn();
+  render(<Form name="taro" onSubmit={mockFn} />);
+  fireEvent.click(screen.getByRole("button"));
+  expect(mockFn).toHaveBeenCalled();
 });
