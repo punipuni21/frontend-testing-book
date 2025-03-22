@@ -3,7 +3,6 @@ import { Form } from "./Form";
 
 test("display name", () => {
   render(<Form name="taro" />);
-  screen.debug();
   expect(screen.getByText("taro")).toBeInTheDocument();
 });
 
