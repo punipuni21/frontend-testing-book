@@ -14,3 +14,8 @@ test("display button", () => {
   render(<Form name="taro" />);
   expect(screen.getByRole("button")).toBeInTheDocument();
 });
+
+test("display heading", () => {
+  render(<Form name="taro" />);
+  expect(screen.getByRole("heading")).toHaveTextContent("account info");
+});
