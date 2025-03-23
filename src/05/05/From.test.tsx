@@ -4,6 +4,13 @@ import userEvent from "@testing-library/user-event";
 
 const user = userEvent.setup();
 
+test("accessible name of a form quotes the heading", async () => {
+  render(<Form />);
+  expect(
+    screen.getByRole("form", { name: "register new account" })
+  ).toBeInTheDocument();
+});
+
 test("signup button is disabled", async () => {
   render(<Form />);
   expect(screen.getByRole("button", { name: "sign up" })).toBeDisabled();

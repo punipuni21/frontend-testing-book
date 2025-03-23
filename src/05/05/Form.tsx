@@ -7,7 +7,7 @@ export const Form = () => {
   const headingId = useId();
 
   return (
-    <form area-labelledby={headingId}>
+    <form aria-labelledby={headingId}>
       <h2 id={headingId}>register new account</h2>
       <InputAccount />
       <Agreement
