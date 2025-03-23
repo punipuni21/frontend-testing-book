@@ -6,7 +6,7 @@ import { PastDeliveryAddress } from "./PastDeliverryAddress";
 
 export type AddressOption = React.ComponentProps<"option"> & { id: string };
 export type Props = {
-  deliveryAddress: AddressOption[];
+  deliveryAddress?: AddressOption[];
   onSubmit?: (event: React.FormEvent<HTMLFormElement>) => void;
 };
 

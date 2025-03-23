@@ -1,14 +1,15 @@
-import { screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { Form } from "./Form";
 
 const user = userEvent.setup();
 
-async function inputContactNumber({
+async function inputContactNumber(
   inputValues = {
     name: "taro",
     phoneNumber: "090-1234-5678",
-  },
-}) {
+  }
+) {
   await user.type(
     screen.getByRole("textbox", { name: "電話番号" }),
     inputValues.phoneNumber
@@ -46,3 +47,43 @@ async function inputDeliveryAddress(
   );
   return inputValues;
 }
+
+function mockHandleSubmit() {
+  const mockFn = jest.fn();
+  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const data: { [k: string]: unknown } = {};
+    formData.forEach((value, key) => (data[key] = value));
+    mockFn(data);
+  };
+  return [mockFn, onSubmit] as const;
+}
+
+async function clickSubmit() {
+  await user.click(
+    screen.getByRole("button", { name: "注文内容の確認へ進む" })
+  );
+}
+
+describe("過去のお届け先がない場合", () => {
+  test("お届け先入力欄がある", () => {
+    render(<Form />);
+    expect(screen.getByRole("group", { name: "連絡先" })).toBeInTheDocument();
+    expect(screen.getByRole("group", { name: "お届け先" })).toBeInTheDocument();
+  });
+
+  test("入力，送信すると，入力内容が送信される", async () => {
+    const [mockFn, onSubmit] = mockHandleSubmit();
+    render(<Form onSubmit={onSubmit} />);
+    const contactNumber = await inputContactNumber();
+    const deliveryAddress = await inputDeliveryAddress();
+    await clickSubmit();
+    expect(mockFn).toHaveBeenCalledWith(
+      expect.objectContaining({
+        ...contactNumber,
+        ...deliveryAddress,
+      })
+    );
+  });
+});
