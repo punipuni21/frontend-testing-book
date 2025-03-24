@@ -28,3 +28,11 @@ test("成功時「登録しました」が表示される", async () => {
   expect(mockFn).toHaveBeenCalledWith(expect.objectContaining(submitValues));
   expect(screen.getByText("登録しました")).toBeInTheDocument();
 });
+
+test("失敗時「登録に失敗しました」が表示される", async () => {
+  const mockFn = mockPostMyAddress(500);
+  render(<RegisterAddress />);
+  const submitValues = await fillValuesAndSubmit();
+  expect(mockFn).toHaveBeenCalledWith(expect.objectContaining(submitValues));
+  expect(screen.getByText("登録に失敗しました")).toBeInTheDocument();
+});
