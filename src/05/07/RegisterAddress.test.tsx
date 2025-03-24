@@ -59,3 +59,9 @@ test("不明なエラー時，メッセージが表示される", async () => {
   await fillValuesAndSubmit();
   expect(screen.getByText("不明なエラーが発生しました")).toBeInTheDocument();
 });
+
+test("Snapshot: 登録フォームが表示される", async () => {
+  mockPostMyAddress();
+  const { container } = render(<RegisterAddress />);
+  expect(container).toMatchSnapshot();
+});
