@@ -28,6 +28,6 @@ test("when push button, then event handler is called", () => {
 });
 
 test("Snapshot: display account name 'taro'", async () => {
-  const { container } = render(<Form name="jiro" />);
+  const { container } = render(<Form name="taro" />);
   expect(container).toMatchSnapshot();
 });
