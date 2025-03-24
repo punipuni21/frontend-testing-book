@@ -1,6 +1,7 @@
-import { render, screen } from "@testing-library/react";
+import { getByRole, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Form } from "./Form";
+import { deliveryAddresses } from "./fixture";
 
 const user = userEvent.setup();
 
@@ -85,5 +86,28 @@ describe("過去のお届け先がない場合", () => {
         ...deliveryAddress,
       })
     );
+  });
+});
+
+describe("過去のお届け先がある場合", () => {
+  test("設問に答えるまで，お届け先を選べない", () => {
+    render(<Form deliveryAddress={deliveryAddresses} />);
+    expect(
+      screen.getByRole("group", { name: "新しいお届け先を登録しますか？" })
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByRole("group", { name: "過去のお届け先" })
+    ).toBeDisabled();
+  });
+  test("「いいえ」を選択，入力，送信すると，入力内容が送信される", async () => {
+    const [mockFn, onSubmit] = mockHandleSubmit();
+    render(<Form deliveryAddress={deliveryAddresses} onSubmit={onSubmit} />);
+    await user.click(screen.getByLabelText("いいえ"));
+    expect(
+      screen.getByRole("group", { name: "過去のお届け先" })
+    ).toBeInTheDocument();
+    const inputValues = await inputContactNumber();
+    await clickSubmit();
+    expect(mockFn).toHaveBeenCalledWith(expect.objectContaining(inputValues));
   });
 });
