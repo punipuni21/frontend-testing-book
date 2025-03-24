@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Snapshot: display account name 'taro' 1`] = `
+<div>
+  <form>
+    <h2>
+      account info
+    </h2>
+    <p>
+      taro
+    </p>
+    <div>
+      <button>
+        edit
+      </button>
+    </div>
+  </form>
+</div>
+`;

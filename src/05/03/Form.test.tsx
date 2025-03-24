@@ -26,3 +26,8 @@ test("when push button, then event handler is called", () => {
   fireEvent.click(screen.getByRole("button"));
   expect(mockFn).toHaveBeenCalled();
 });
+
+test("Snapshot: display account name 'taro'", async () => {
+  const { container } = render(<Form name="jiro" />);
+  expect(container).toMatchSnapshot();
+});
