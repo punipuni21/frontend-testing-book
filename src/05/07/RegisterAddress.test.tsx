@@ -47,3 +47,15 @@ test("失敗時「登録に失敗しました」が表示される", async () =>
   expect(mockFn).toHaveBeenCalledWith(expect.objectContaining(submitValues));
   expect(screen.getByText("登録に失敗しました")).toBeInTheDocument();
 });
+
+test("バリデーションエラー時，メッセージが表示される", async () => {
+  render(<RegisterAddress />);
+  await fillInvalidValuesAndSubmit();
+  expect(screen.getByText("不正な入力値が含まれています")).toBeInTheDocument();
+});
+
+test("不明なエラー時，メッセージが表示される", async () => {
+  render(<RegisterAddress />);
+  await fillValuesAndSubmit();
+  expect(screen.getByText("不明なエラーが発生しました")).toBeInTheDocument();
+});
