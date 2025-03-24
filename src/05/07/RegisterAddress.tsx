@@ -11,7 +11,7 @@ export const RegisterAddress: React.FC = () => {
       <Form
         onSubmit={handleSubmit((values) => {
           try {
-            checkPhoneNumber(values);
+            checkPhoneNumber(values.phoneNumber);
             postMyAddress(values)
               .then(() => {
                 setPostResult("登録しました");
