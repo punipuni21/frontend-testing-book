@@ -17,6 +17,17 @@ async function fillValuesAndSubmit() {
   return submitValues;
 }
 
+async function fillInvalidValuesAndSubmit() {
+  const contactNumber = await inputContactNumber({
+    name: "田中 太郎",
+    phoneNumber: "abc-defg-hijkl",
+  });
+  const deliveryAddress = await inputDeliveryAddress();
+  const submitValues = { ...contactNumber, ...deliveryAddress };
+  await clickSubmit();
+  return submitValues;
+}
+
 beforeEach(() => {
   jest.resetAllMocks();
 });
